@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react"
 import { useSearchParams } from "react-router"
+import { CalendarOff } from "lucide-react"
 import { listarAulasDoDia } from "@/services/aulaService"
 import { useDados } from "@/hooks/useDados"
 import { HORARIOS_MANHA } from "@/lib/horarios"
@@ -44,7 +45,12 @@ function AulasDoDia({ data }) {
   if (carregando) return <Skeleton />
   if (erro) return <EstadoErro aoTentar={recarregar} />
   if (!aulas || aulas.length === 0) {
-    return <p className="aulas-hoje__vazio">Nenhuma aula neste dia.</p>
+    return (
+      <div className="estado-vazio">
+        <CalendarOff className="estado-vazio__icone" size={36} aria-hidden="true" />
+        <p className="estado-vazio__texto">Nenhuma aula neste dia.</p>
+      </div>
+    )
   }
 
   const primeiraPendente = aulas.find((a) => a.status === "pendente")

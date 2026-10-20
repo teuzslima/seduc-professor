@@ -1,39 +1,50 @@
-/* ------------------------------------------------------------------ */
-/* Tema (tokens) — cores do Figma. Nenhum hex deve ir para os          */
-/* componentes: eles usam sempre var(--token).                          */
-/* ------------------------------------------------------------------ */
+/* ================================================================== */
+/* Design System — Diário Eletrônico SEDUC/Sergipe (Squad 60)         */
+/* Paleta B (fundo claro). Nenhum hex vai para os componentes:         */
+/* eles usam sempre var(--token).                                      */
+/* ================================================================== */
 :root {
-  /* base */
+  /* paleta B */
+  --fundo: #dadad9; /* fundo da tela */
+  --superficie: #ffffff; /* cards / superfícies */
+  --ink: #011638; /* header, tab bar, rodapé */
+  --primaria: #0d21a1; /* ação principal (1–2 por tela) */
+  --secundaria: #5e807f; /* status positivo */
+  --texto: #141414; /* texto sobre superfície */
+  --texto-suave: #5b616e; /* apoio */
+  --sobre-ink: #ffffff; /* texto sobre ink */
+  --sobre-primaria: #ffffff; /* texto sobre primária */
+  --borda: #e3e4e3; /* divisórias / contornos leves */
+  --pilula-fundo: #eef0f2; /* badges neutros */
   --branco: #ffffff;
-  --fundo: #f3f4f6;
-  --superficie: #ffffff;
-  --texto: #1f2430;
-  --texto-suave: #6b7280;
-  --borda: #e5e7eb;
-  --pilula-fundo: #eceef1;
 
-  /* cores institucionais / destaque */
-  --azul-marinho: #011638;
-  --verde-acinzentado: #5e807f;
-  --cinza-esverdeado: #b8c2c2;
+  /* cor por turma (ordem alfabética das turmas) — mesma cor aqui e em
+     Aulas da Semana. */
+  --turma-1: var(--ink);
+  --turma-2: var(--secundaria);
+  --turma-3: #b8c2c2;
 
-  /* azul usado no card aberto e nas ações */
-  --acento: var(--azul-marinho);
-  --sobre-acento: #ffffff;
+  /* escala de espaçamento (múltiplos de 4px) */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 20px;
+  --e-6: 24px;
 
-  /* cor por turma (ordem alfabética das turmas) — usada aqui e em
-     Aulas da Semana. Mantê-las aqui garante a mesma cor nos dois lugares. */
-  --turma-1: var(--azul-marinho);
-  --turma-2: var(--verde-acinzentado);
-  --turma-3: var(--cinza-esverdeado);
+  /* raios */
+  --raio-badge: 8px;
+  --raio-card: 16px;
+  --raio-card-sm: 12px;
+  --raio-pill: 100px;
 
-  /* status */
-  --check-fundo: var(--verde-acinzentado);
+  --sombra-card: 0 1px 3px rgba(1, 22, 56, 0.08), 0 1px 2px rgba(1, 22, 56, 0.04);
 
-  --raio-resumo: 16px;
-  --raio-card: 12px;
+  /* alturas das barras fixas de baixo */
+  --h-tabbar: 60px;
+  --h-rodape: 30px;
 
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--texto);
 }
 
@@ -58,59 +69,200 @@ button {
 }
 
 /* ------------------------------------------------------------------ */
-/* AppShell (fora do escopo desta tarefa — versão mínima)              */
+/* AppShell: header + conteúdo + bottom tab bar + rodapé fixo          */
 /* ------------------------------------------------------------------ */
 .app-shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--fundo);
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
 }
 
+/* ---- Header (ink) ---- */
 .app-header {
-  padding: 14px 16px;
-  background: var(--azul-marinho);
-  color: var(--sobre-acento);
+  background: var(--ink);
+  color: var(--sobre-ink);
+  padding: var(--e-3) var(--e-4) var(--e-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
 }
 
 .app-header__orgao {
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
 }
 
+.app-header__linha {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: 28px;
+}
+
+.app-header__voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--sobre-ink);
+  padding: 0;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.app-header__titulo {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ---- Conteúdo ---- */
 .app-main {
   flex: 1;
   width: 100%;
+  padding: var(--e-4);
+  /* espaço para não ficar atrás da tab bar + rodapé */
+  padding-bottom: calc(var(--h-tabbar) + var(--h-rodape) + var(--e-4));
+}
+
+/* ---- Bottom tab bar + rodapé (fixos, ink) ---- */
+.barra-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   max-width: 430px;
   margin: 0 auto;
-  padding: 16px;
+  z-index: 10;
+}
+
+.tabbar {
+  height: var(--h-tabbar);
+  background: var(--ink);
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tabbar__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tabbar__item--ativo {
+  color: var(--sobre-ink);
+}
+
+.tabbar__item--ativo .tabbar__rotulo {
+  color: var(--sobre-ink);
+}
+
+/* a aba ativa marca a cor primária num ponto de destaque */
+.tabbar__item--ativo .tabbar__ponto {
+  background: var(--primaria);
+}
+
+.tabbar__ponto {
+  width: 18px;
+  height: 3px;
+  border-radius: var(--raio-pill);
+  background: transparent;
+}
+
+.rodape {
+  height: var(--h-rodape);
+  background: var(--ink);
+  color: var(--sobre-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.9;
 }
 
 /* ------------------------------------------------------------------ */
-/* Menu do Professor (mínimo — só o atalho)                            */
+/* Menu do Professor (Início)                                          */
 /* ------------------------------------------------------------------ */
 .menu-professor {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--e-3);
 }
 
 .menu-professor__titulo {
-  font-size: 18px;
-  margin: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-suave);
+  margin: var(--e-1) 0 var(--e-1);
 }
 
-.menu-professor__atalho {
+.menu-card {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  padding: var(--e-4);
+  background: var(--superficie);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  text-decoration: none;
+  color: var(--texto);
+}
+
+.menu-card__icone {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--raio-card-sm);
+  background: var(--pilula-fundo);
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
-  border-radius: 12px;
-  background: var(--acento);
-  color: var(--sobre-acento);
+  flex-shrink: 0;
+}
+
+.menu-card__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-card__titulo {
+  font-size: 15px;
   font-weight: 600;
-  text-decoration: none;
+}
+
+.menu-card__apoio {
+  font-size: 12px;
+  color: var(--texto-suave);
+}
+
+.menu-card__seta {
+  color: var(--texto-suave);
+  flex-shrink: 0;
 }
 
 /* ------------------------------------------------------------------ */
@@ -119,13 +271,13 @@ button {
 .aulas-hoje {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--e-4);
 }
 
 .aulas-hoje__vazio {
   text-align: center;
   color: var(--texto-suave);
-  padding: 32px 8px;
+  padding: var(--e-6) var(--e-2);
   font-size: 14px;
 }
 
@@ -134,19 +286,20 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--e-2);
 }
 
 .seletor-dia__seta {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--e-1);
   border: 1px solid var(--borda);
   background: var(--superficie);
-  color: var(--azul-marinho);
-  border-radius: 10px;
-  padding: 8px 10px;
+  color: var(--ink);
+  border-radius: var(--raio-pill);
+  padding: var(--e-2) var(--e-3);
   min-height: 40px;
+  font-weight: 600;
 }
 
 .seletor-dia__centro {
@@ -167,8 +320,8 @@ button {
 }
 
 .seletor-dia__sigla {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* ---- Card de resumo do dia ---- */
@@ -176,23 +329,25 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--e-3);
   background: var(--superficie);
-  border-radius: var(--raio-resumo);
-  padding: 16px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: var(--raio-card);
+  padding: var(--e-4);
+  box-shadow: var(--sombra-card);
 }
 
 .resumo-dia__texto {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--e-2);
   min-width: 0;
 }
 
 .resumo-dia__dia-semana {
   font-size: 12px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--texto-suave);
 }
 
@@ -205,17 +360,17 @@ button {
 .resumo-dia__pilulas {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--e-1);
   margin-top: 2px;
 }
 
 .pilula {
   background: var(--pilula-fundo);
-  color: var(--azul-marinho);
+  color: var(--ink);
   font-size: 11px;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 999px;
+  padding: var(--e-1) var(--e-3);
+  border-radius: var(--raio-pill);
 }
 
 .resumo-dia__contador {
@@ -230,13 +385,13 @@ button {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: 2px solid var(--acento);
+  border: 2px solid var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 15px;
   font-weight: 700;
-  color: var(--acento);
+  color: var(--ink);
 }
 
 .resumo-dia__legenda {
@@ -248,27 +403,27 @@ button {
 .lista-aulas {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--e-2);
 }
 
 .lista-aulas__cabecalho {
   display: grid;
   grid-template-columns: 44px 1fr 44px;
-  gap: 8px;
+  gap: var(--e-2);
   padding: 0 2px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--texto-suave);
 }
 
 .lista-aulas__cabecalho span:first-child {
   text-align: left;
 }
-
 .lista-aulas__cabecalho span:nth-child(2) {
   text-align: center;
 }
-
 .lista-aulas__cabecalho span:last-child {
   text-align: right;
 }
@@ -276,7 +431,7 @@ button {
 .linha-aula {
   display: grid;
   grid-template-columns: 44px 1fr 44px;
-  gap: 8px;
+  gap: var(--e-2);
   align-items: center;
 }
 
@@ -290,9 +445,9 @@ button {
 .intervalo {
   display: grid;
   grid-template-columns: 44px 1fr 44px;
-  gap: 8px;
+  gap: var(--e-2);
   align-items: center;
-  padding: 4px 0;
+  padding: var(--e-1) 0;
 }
 
 .intervalo__hora {
@@ -304,7 +459,7 @@ button {
 .intervalo__meio {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--e-2);
 }
 
 .intervalo__linha {
@@ -325,23 +480,24 @@ button {
   background: var(--superficie);
   border: 1px solid var(--borda);
   border-left: 4px solid var(--cor-turma);
-  border-radius: var(--raio-card);
+  border-radius: var(--raio-card-sm);
   overflow: hidden;
+  box-shadow: var(--sombra-card);
   transition: border-color 0.15s ease;
 }
 
 .card-aula--aberta {
-  border-color: var(--acento);
+  border-color: var(--ink);
 }
 
 .card-aula__cabecalho {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--e-3);
   width: 100%;
   border: none;
   background: transparent;
-  padding: 12px;
+  padding: var(--e-3);
   text-align: left;
 }
 
@@ -359,7 +515,7 @@ button {
 }
 
 .card-aula--aberta .card-aula__disciplina {
-  color: var(--acento);
+  color: var(--ink);
 }
 
 .card-aula__turma {
@@ -371,7 +527,7 @@ button {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--check-fundo);
+  background: var(--secundaria);
   color: var(--branco);
   display: inline-flex;
   align-items: center;
@@ -387,48 +543,50 @@ button {
 
 .card-aula--aberta .card-aula__seta {
   transform: rotate(180deg);
-  color: var(--acento);
+  color: var(--ink);
 }
 
 .card-aula__acoes {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 0 12px 12px;
+  gap: var(--e-2);
+  padding: 0 var(--e-3) var(--e-3);
 }
 
 .btn-pilula {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--e-2);
   width: 100%;
-  border-radius: 999px;
-  padding: 10px 12px;
+  border-radius: var(--raio-pill);
+  padding: var(--e-3);
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
 }
 
+/* ação secundária: outline ink */
 .btn-pilula--contorno {
-  border: 1.5px solid var(--acento);
-  color: var(--acento);
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
   background: transparent;
 }
 
+/* ação PRINCIPAL da tela: primária sólida (#0D21A1) */
 .btn-pilula--solido {
-  border: 1.5px solid var(--acento);
-  background: var(--acento);
-  color: var(--sobre-acento);
+  border: 1.5px solid var(--primaria);
+  background: var(--primaria);
+  color: var(--sobre-primaria);
 }
 
-/* ---- Estado de erro (versão mínima) ---- */
+/* ---- Estado de erro ---- */
 .estado-erro {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 32px 8px;
+  gap: var(--e-3);
+  padding: var(--e-6) var(--e-2);
   text-align: center;
 }
 
@@ -439,29 +597,49 @@ button {
 }
 
 .estado-erro__botao {
-  border: 1.5px solid var(--acento);
-  color: var(--acento);
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
   background: transparent;
-  border-radius: 999px;
-  padding: 10px 20px;
+  border-radius: var(--raio-pill);
+  padding: var(--e-3) var(--e-5);
   font-size: 13px;
   font-weight: 600;
+}
+
+/* ---- Estado vazio ---- */
+.estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--e-2);
+  padding: var(--e-6) var(--e-2);
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+.estado-vazio__icone {
+  color: var(--secundaria);
+}
+
+.estado-vazio__texto {
+  font-size: 14px;
+  margin: 0;
 }
 
 /* ---- Skeleton (carregando) ---- */
 .skeleton {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--e-3);
 }
 
 .skeleton__bloco {
   height: 56px;
-  border-radius: var(--raio-card);
+  border-radius: var(--raio-card-sm);
   background: linear-gradient(
     90deg,
     var(--borda) 25%,
-    var(--pilula-fundo) 37%,
+    var(--superficie) 37%,
     var(--borda) 63%
   );
   background-size: 400% 100%;
@@ -470,7 +648,7 @@ button {
 
 .skeleton__bloco--resumo {
   height: 92px;
-  border-radius: var(--raio-resumo);
+  border-radius: var(--raio-card);
 }
 
 @keyframes skeleton-brilho {
@@ -482,16 +660,25 @@ button {
   }
 }
 
-/* ---- Páginas provisórias (presença / diário, outras tarefas) ---- */
+/* ---- Páginas provisórias (presença / diário / solicitações / registros) ---- */
 .placeholder {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 24px 8px;
+  gap: var(--e-2);
+  padding: var(--e-6) var(--e-2);
+  color: var(--texto-suave);
+}
+
+.placeholder h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--texto);
+  margin: 0;
 }
 
 .placeholder code {
   background: var(--pilula-fundo);
+  color: var(--ink);
   padding: 2px 6px;
-  border-radius: 6px;
+  border-radius: var(--raio-badge);
 }

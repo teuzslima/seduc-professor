@@ -12,6 +12,14 @@ export default function App() {
         <Route path="/professor" element={<MenuProfessor />} />
         <Route path="/professor/aulas-hoje" element={<AulasHoje />} />
         <Route
+          path="/professor/solicitacoes"
+          element={<Placeholder titulo="Solicitações" />}
+        />
+        <Route
+          path="/professor/registros"
+          element={<Placeholder titulo="Registros" />}
+        />
+        <Route
           path="/professor/presenca"
           element={<Placeholder titulo="Lista de Presença" />}
         />
