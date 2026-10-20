@@ -1,56 +1,107 @@
-# SEDUC Sergipe · Portal do Professor
+<div align="center">
 
-App em React (Vite) para o portal do professor. Primeira tela implementada:
-**Aulas de Hoje** (`/professor/aulas-hoje`).
+# 🎓 Diário Eletrônico — SEDUC/Sergipe (Portal do Professor)
 
-## Rodar
+**App do professor: aulas do dia, presença e diário eletrônico**
+*Teacher portal: daily classes, attendance and digital class journal*
+
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter&logoColor=white)
+![Status](https://img.shields.io/badge/status-em_desenvolvimento-yellow)
+
+[**Português**](#-português) · [**English**](#-english)
+
+<br/>
+
+<img src="docs/aulas-hoje.jpg" alt="Tela Aulas de Hoje" width="320" />
+
+</div>
+
+---
+
+## 🇧🇷 Português
+
+### Sobre
+
+Aplicativo **mobile-first** do portal do professor da rede estadual (SEDUC/Sergipe), projeto
+acadêmico do **Squad 60**. A primeira tela entregue é a **Aulas de Hoje**: lista as aulas do
+dia na ordem do horário, mostra quantas já foram concluídas e dá acesso rápido à Lista de
+Presença e ao Diário Eletrônico de cada aula.
+
+### Funcionalidades (tela Aulas de Hoje)
+
+- 📅 **Navegação por dia** com o dia na URL (`?data=`) — setas, link direto e o botão *Voltar* do navegador funcionam
+- 📊 **Resumo do dia**: disciplinas, turmas e contador de **concluídas/total**
+- 🗂️ **Lista no horário do turno** (com intervalo no lugar certo)
+- 🔽 **Cards expansíveis** (um aberto por vez; a 1ª aula pendente já abre)
+- 🎨 **Design System Squad 60** (Paleta B, Poppins) com tokens de cor — sem hex nos componentes
+- ⏳ **Estados** de carregando (skeleton), erro (com *tentar novamente*) e vazio
+
+### Stack
+
+**React 19** · **Vite 6** · **React Router 7** · **lucide-react** (ícones SVG) · CSS com
+*design tokens*. Dados simulados por mocks + um serviço assíncrono (pronto para trocar por API).
+
+### Como rodar
 
 ```bash
 npm install
-npm run dev
+npm run dev      # http://localhost:5173
+npm run build    # build de produção
+npm run lint
 ```
 
-- Build de produção: `npm run build`
-- Lint: `npm run lint`
-
-Abre em `/` → redireciona para o Menu do Professor → "Aulas de Hoje".
-
-## Estrutura
+### Estrutura
 
 ```
 src/
-├── mocks/aulas.json          # dados de exemplo (18 aulas, prof-001, 14–16/09/2026)
-├── lib/
-│   ├── datas.js              # datas "AAAA-MM-DD" (somarDias, nomeDiaSemana, ...)
-│   ├── horarios.js           # HORARIOS_MANHA (turno da manhã + intervalo)
-│   ├── turmas.js             # cor por turma (tokens --turma-1/2/3)
-│   └── mockUtils.js          # simularRequisicao (+ ?estado=carregando|erro)
-├── hooks/useDados.js         # busca assíncrona com carregando/erro/recarregar
-├── services/aulaService.js   # listarAulasDoDia / listarAulasDaSemana / encontrarAula
-├── components/
-│   ├── AppShell.jsx          # casca mínima (fora do escopo da tela)
-│   ├── EstadoErro.jsx        # estado de erro mínimo
-│   ├── Skeleton.jsx          # carregando
-│   └── professor/
-│       ├── SeletorDia.jsx    # setas + nome/data do dia
-│       ├── ResumoDia.jsx     # card de resumo (pílulas + concluídas/total)
-│       └── CardAulaDia.jsx   # card de uma aula (aberto/fechado)
-└── pages/professor/
-    ├── MenuProfessor.jsx     # atalho mínimo para Aulas de Hoje
-    ├── AulasHoje.jsx         # a tela
-    └── Placeholder.jsx       # Presença/Diário provisórios (outras tarefas)
+├── pages/professor/      # Aulas de Hoje (+ telas provisórias)
+├── components/           # AppShell, SeletorDia, ResumoDia, CardAulaDia, estados
+├── hooks/useDados.js     # busca assíncrona (carregando/erro/recarregar)
+├── services/             # aulaService (listar aulas do dia/semana)
+├── lib/                  # datas, horários, cor por turma, mockUtils
+└── mocks/aulas.json      # dados de exemplo
 ```
 
-## Como testar
+---
 
-- O dia fica na URL: `?data=2026-09-15` abre a terça. Setas mudam o dia; o
-  Voltar do navegador volta ao dia anterior.
-- Abre em `14/09/2026` com "2/6 aulas" e a aula das 08:40 (1ª pendente) aberta.
-- Só um card aberto por vez.
-- `?estado=carregando` e `?estado=erro` forçam esses estados.
+## 🇺🇸 English
 
-## Observações
+### About
 
-As cores nunca vão em hex nos componentes — só tokens `var(--...)` definidos
-em `src/index.css`. A cor de cada turma segue a ordem alfabética das turmas
-(`--turma-1`, `--turma-2`, `--turma-3`), para bater com Aulas da Semana.
+A **mobile-first** teacher-portal app for the state education network (SEDUC/Sergipe), an
+academic project by **Squad 60**. The first delivered screen is **Today's Classes**: it lists
+the day's classes in time order, shows how many are already done, and gives quick access to each
+class's Attendance list and digital Journal.
+
+### Features (Today's Classes screen)
+
+- 📅 **Day navigation** with the day in the URL (`?data=`) — arrows, deep links and the browser *Back* button all work
+- 📊 **Day summary**: subjects, classes and a **done/total** counter
+- 🗂️ **Shift-schedule list** (with the break placed correctly)
+- 🔽 **Expandable cards** (one open at a time; the first pending class opens by default)
+- 🎨 **Squad 60 Design System** (Palette B, Poppins) with color tokens — no hex in components
+- ⏳ **Loading** (skeleton), **error** (with retry) and **empty** states
+
+### Stack
+
+**React 19** · **Vite 6** · **React Router 7** · **lucide-react** (SVG icons) · CSS design
+tokens. Mocked data behind an async service (ready to swap for a real API).
+
+### Getting started
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build
+npm run lint
+```
+
+---
+
+<div align="center">
+
+Projeto acadêmico — **Squad 60** · Desenvolvido por **[@teuzslima](https://github.com/teuzslima)**
+
+</div>
