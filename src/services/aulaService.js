@@ -43,6 +43,10 @@ export function buscarChamada(aulaId) {
 }
 
 // Mock: só simula o envio. Os dados voltam ao original quando a página recarrega.
+// ?estado=erro-envio força o erro só no envio (sem derrubar o carregamento).
 export function salvarPresencas(aulaId, presencas) {
-  return simularRequisicao(() => ({ aulaId, presencas, salvoEm: new Date().toISOString() }))
+  return simularRequisicao(
+    () => ({ aulaId, presencas, salvoEm: new Date().toISOString() }),
+    { erroEm: "erro-envio", mensagemErro: "Não foi possível enviar a presença." },
+  )
 }

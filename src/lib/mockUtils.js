@@ -1,7 +1,9 @@
 // Simula uma requisição a um "back-end" com um pequeno atraso.
 // Para testar estados, lê ?estado= da URL:
 //   ?estado=carregando  -> a promessa nunca resolve (fica em "carregando")
-//   ?estado=erro        -> a promessa rejeita (mostra o EstadoErro)
+//   ?estado=erro        -> a promessa rejeita (mostra o EstadoErro no carregamento)
+// Uma escrita pode definir um gatilho de erro próprio (opcoes.erroEm), para
+// falhar sem derrubar o carregamento — ex.: ?estado=erro-envio só no envio.
 const ATRASO_MS = 500
 
 function estadoForcado() {
@@ -9,7 +11,8 @@ function estadoForcado() {
   return new URLSearchParams(window.location.search).get("estado")
 }
 
-export function simularRequisicao(obterDados) {
+export function simularRequisicao(obterDados, opcoes = {}) {
+  const { erroEm, mensagemErro = "Não foi possível carregar as aulas." } = opcoes
   return new Promise((resolve, reject) => {
     const estado = estadoForcado()
 
@@ -17,11 +20,8 @@ export function simularRequisicao(obterDados) {
       return // nunca resolve: a tela fica carregando
     }
 
-    if (estado === "erro") {
-      setTimeout(
-        () => reject(new Error("Não foi possível carregar as aulas.")),
-        ATRASO_MS,
-      )
+    if (estado === "erro" || (erroEm && estado === erroEm)) {
+      setTimeout(() => reject(new Error(mensagemErro)), ATRASO_MS)
       return
     }
 
