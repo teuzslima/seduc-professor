@@ -1,4 +1,5 @@
 import aulas from "@/mocks/aulas.json"
+import alunos from "@/mocks/alunos.json"
 import { simularRequisicao } from "@/lib/mockUtils"
 import { somarDias } from "@/lib/datas"
 
@@ -24,4 +25,24 @@ export function listarAulasDaSemana(professorId, segunda) {
       (a) => a.professorId === professorId && a.data >= segunda && a.data <= sabado,
     ),
   )
+}
+
+// Junta a aula com os alunos da turma e a presença de cada um nessa aula.
+export function buscarChamada(aulaId) {
+  return simularRequisicao(() => {
+    const aula = aulas.find((a) => a.id === aulaId)
+    if (!aula) throw new Error("Aula não encontrada")
+    const alunosDaTurma = alunos
+      .filter((aluno) => aluno.turma === aula.turma)
+      .map((aluno) => ({
+        ...aluno,
+        presente: aula.presencas.find((p) => p.alunoId === aluno.id)?.presente ?? true,
+      }))
+    return { aula, alunos: alunosDaTurma }
+  })
+}
+
+// Mock: só simula o envio. Os dados voltam ao original quando a página recarrega.
+export function salvarPresencas(aulaId, presencas) {
+  return simularRequisicao(() => ({ aulaId, presencas, salvoEm: new Date().toISOString() }))
 }

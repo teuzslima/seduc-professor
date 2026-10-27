@@ -10,6 +10,8 @@
   --ink: #011638; /* header, tab bar, rodapé */
   --primaria: #0d21a1; /* ação principal (1–2 por tela) */
   --secundaria: #5e807f; /* status positivo */
+  --alerta-atencao: #f1892d; /* frequência perto do limite */
+  --alerta-limite: #e22b2b; /* frequência abaixo do mínimo */
   --texto: #141414; /* texto sobre superfície */
   --texto-suave: #5b616e; /* apoio */
   --sobre-ink: #ffffff; /* texto sobre ink */
@@ -681,4 +683,291 @@ button {
   color: var(--ink);
   padding: 2px 6px;
   border-radius: var(--raio-badge);
+}
+
+/* ------------------------------------------------------------------ */
+/* Lista de presença                                                   */
+/* ------------------------------------------------------------------ */
+.lista-presenca {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+}
+
+/* Card da data da aula */
+.card-data-aula {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  background: var(--superficie);
+  border-radius: var(--raio-card);
+  padding: var(--e-4);
+  box-shadow: var(--sombra-card);
+}
+
+.card-data-aula__rotulo {
+  font-size: 11px;
+  color: var(--texto-suave);
+}
+
+.card-data-aula__valor {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+/* Tabela de alunos */
+.tabela-alunos {
+  background: var(--superficie);
+  border-radius: var(--raio-card);
+  padding: var(--e-3) var(--e-4);
+  box-shadow: var(--sombra-card);
+}
+
+.tabela-alunos__cabecalho,
+.linha-aluno {
+  display: grid;
+  grid-template-columns: 1fr 44px 76px;
+  gap: var(--e-2);
+  align-items: center;
+}
+
+.tabela-alunos__cabecalho {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--texto-suave);
+  padding-bottom: var(--e-2);
+  border-bottom: 1px solid var(--borda);
+}
+
+.col-centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.linha-aluno {
+  padding: var(--e-3) 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.linha-aluno:last-child {
+  border-bottom: none;
+}
+
+.linha-aluno__nome {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-width: 0;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--pilula-fundo);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nome-aluno {
+  font-size: 14px;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.nome-aluno--atencao {
+  color: var(--alerta-atencao);
+  font-weight: 600;
+}
+
+.nome-aluno--limite {
+  color: var(--alerta-limite);
+  font-weight: 600;
+}
+
+/* Coluna P (presença) */
+.presenca-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--borda);
+  background: transparent;
+  color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.presenca-btn--on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--branco);
+}
+
+.presenca-btn:disabled {
+  cursor: default;
+}
+
+.presenca-btn:not(:disabled):hover {
+  border-color: var(--ink);
+}
+
+/* Coluna Freq. */
+.freq {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--e-1);
+}
+
+.freq__barra {
+  width: 72px;
+  height: 6px;
+  border-radius: var(--raio-pill);
+  background: var(--pilula-fundo);
+  overflow: hidden;
+}
+
+.freq__preenchido {
+  height: 100%;
+  border-radius: var(--raio-pill);
+}
+
+.freq__preenchido--normal {
+  background: var(--ink);
+}
+.freq__preenchido--atencao {
+  background: var(--alerta-atencao);
+}
+.freq__preenchido--limite {
+  background: var(--alerta-limite);
+}
+
+.freq__valor {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--texto);
+}
+.freq__valor--atencao {
+  color: var(--alerta-atencao);
+}
+.freq__valor--limite {
+  color: var(--alerta-limite);
+}
+
+/* Botão editar/cancelar */
+.btn-editar {
+  width: 100%;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  border-radius: var(--raio-pill);
+  padding: var(--e-3);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Observações */
+.observacoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+}
+
+.observacoes__titulo {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--texto-suave);
+  margin: 0;
+}
+
+.observacoes__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  background: var(--superficie);
+  border-radius: var(--raio-card-sm);
+  padding: var(--e-4);
+  box-shadow: var(--sombra-card);
+}
+
+.observacoes__item {
+  margin: 0;
+  font-size: 13px;
+  color: var(--texto);
+}
+
+.observacoes__item--regra {
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
+/* Botão enviar */
+.btn-enviar {
+  width: 100%;
+  height: 56px;
+  border: none;
+  background: var(--primaria);
+  color: var(--sobre-primaria);
+  border-radius: var(--raio-pill);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.btn-enviar:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ------------------------------------------------------------------ */
+/* Toaster (notificações)                                              */
+/* ------------------------------------------------------------------ */
+.toaster {
+  position: fixed;
+  top: calc(var(--e-4) + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--e-2);
+  padding: 0 var(--e-4);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  max-width: 420px;
+  padding: var(--e-3) var(--e-4);
+  border-radius: var(--raio-pill);
+  color: var(--branco);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--sombra-card);
+}
+
+.toast__icone {
+  display: inline-flex;
+}
+
+.toast--success {
+  background: var(--secundaria);
+}
+
+.toast--error {
+  background: var(--alerta-limite);
 }

@@ -9,12 +9,29 @@
     "horarioFim": "07:50",
     "status": "concluida",
     "presencas": [
-      { "alunoId": "aluno-01", "presente": true },
-      { "alunoId": "aluno-02", "presente": true },
-      { "alunoId": "aluno-03", "presente": false }
+      { "alunoId": "alu-001", "presente": true },
+      { "alunoId": "alu-002", "presente": true },
+      { "alunoId": "alu-003", "presente": true },
+      { "alunoId": "alu-004", "presente": true },
+      { "alunoId": "alu-005", "presente": true },
+      { "alunoId": "alu-006", "presente": true },
+      { "alunoId": "alu-007", "presente": true },
+      { "alunoId": "alu-008", "presente": true },
+      { "alunoId": "alu-009", "presente": true },
+      { "alunoId": "alu-010", "presente": true },
+      { "alunoId": "alu-011", "presente": true },
+      { "alunoId": "alu-012", "presente": false },
+      { "alunoId": "alu-013", "presente": false },
+      { "alunoId": "alu-014", "presente": true }
     ],
-    "topicos": ["Números inteiros", "Reta numérica"],
-    "tarefas": ["Lista de exercícios 1, páginas 12 e 13"]
+    "topicos": [
+      "Equação do primeiro grau",
+      "Problemas envolvendo equação do primeiro grau"
+    ],
+    "tarefas": [
+      "Página 14 (Equação do primeiro grau)",
+      "Exercícios no caderno de problemas envolvendo equação do primeiro grau"
+    ]
   },
   {
     "id": "aula-002",
