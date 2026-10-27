@@ -2,8 +2,8 @@
 
 # 🎓 Diário Eletrônico — SEDUC/Sergipe (Portal do Professor)
 
-**App do professor: aulas do dia, presença e diário eletrônico**
-*Teacher portal: daily classes, attendance and digital class journal*
+**App do professor: aulas do dia, lista de presença e diário eletrônico**
+*Teacher portal: daily classes, attendance list and digital class journal*
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
@@ -14,7 +14,9 @@
 
 <br/>
 
-<img src="docs/aulas-hoje.jpg" alt="Tela Aulas de Hoje" width="320" />
+<img src="docs/aulas-hoje.jpg" alt="Tela Aulas de Hoje" width="260" />
+&nbsp;&nbsp;
+<img src="docs/lista-presenca.jpg" alt="Tela Lista de presença" width="260" />
 
 </div>
 
@@ -25,23 +27,31 @@
 ### Sobre
 
 Aplicativo **mobile-first** do portal do professor da rede estadual (SEDUC/Sergipe), projeto
-acadêmico do **Squad 60**. A primeira tela entregue é a **Aulas de Hoje**: lista as aulas do
-dia na ordem do horário, mostra quantas já foram concluídas e dá acesso rápido à Lista de
-Presença e ao Diário Eletrônico de cada aula.
+acadêmico do **Squad 60**. Telas entregues até aqui: **Aulas de Hoje** e **Lista de presença**.
 
-### Funcionalidades (tela Aulas de Hoje)
+### Telas
 
-- 📅 **Navegação por dia** com o dia na URL (`?data=`) — setas, link direto e o botão *Voltar* do navegador funcionam
-- 📊 **Resumo do dia**: disciplinas, turmas e contador de **concluídas/total**
-- 🗂️ **Lista no horário do turno** (com intervalo no lugar certo)
-- 🔽 **Cards expansíveis** (um aberto por vez; a 1ª aula pendente já abre)
-- 🎨 **Design System Squad 60** (Paleta B, Poppins) com tokens de cor — sem hex nos componentes
-- ⏳ **Estados** de carregando (skeleton), erro (com *tentar novamente*) e vazio
+**📅 Aulas de Hoje** · `/professor/aulas-hoje`
+- Navegação por dia com o dia na URL (`?data=`) — setas, link direto e o *Voltar* do navegador
+- Resumo do dia (disciplinas, turmas e contador de concluídas/total)
+- Lista no horário do turno (com o intervalo no lugar certo) e cards expansíveis (um aberto por vez)
+
+**✅ Lista de presença** · `/professor/presenca`
+- **Chamada da turma**: marca presente/ausente por aluno, com **modo leitura e modo edição** (e cancelar)
+- **Frequência** de cada aluno calculada das regras, com três cores: normal, **atenção** e **limite**
+- **Observações automáticas** dos alunos perto ou no limite de faltas (geradas dos dados)
+- **Envio** com "Enviando…", **toast** de sucesso/erro — e, no erro, mantém as marcações
+- **Acessibilidade**: botões da coluna presença com `aria-pressed` e `aria-label`
+
+Comuns às telas: **Design System Squad 60** (Paleta B, Poppins) com tokens de cor (sem hex nos
+componentes), e **estados** de carregando (skeleton), erro (com *tentar novamente*) e vazio —
+testáveis por `?estado=carregando`, `?estado=erro` e `?estado=erro-envio`.
 
 ### Stack
 
 **React 19** · **Vite 6** · **React Router 7** · **lucide-react** (ícones SVG) · CSS com
-*design tokens*. Dados simulados por mocks + um serviço assíncrono (pronto para trocar por API).
+*design tokens* · toast próprio (sem dependência externa). Dados simulados por mocks + um serviço
+assíncrono (pronto para trocar por API).
 
 ### Como rodar
 
@@ -56,12 +66,14 @@ npm run lint
 
 ```
 src/
-├── pages/professor/      # Aulas de Hoje (+ telas provisórias)
-├── components/           # AppShell, SeletorDia, ResumoDia, CardAulaDia, estados
+├── pages/professor/      # AulasHoje, ListaPresenca (+ telas provisórias)
+├── components/
+│   ├── professor/        # SeletorDia, ResumoDia, CardAulaDia, CardDataAula
+│   └── ...               # AppShell, Toaster, EstadoErro, Skeleton
 ├── hooks/useDados.js     # busca assíncrona (carregando/erro/recarregar)
-├── services/             # aulaService (listar aulas do dia/semana)
-├── lib/                  # datas, horários, cor por turma, mockUtils
-└── mocks/aulas.json      # dados de exemplo
+├── services/             # aulaService (aulas do dia/semana, chamada, envio)
+├── lib/                  # datas, horários, frequência, cor por turma, mockUtils, toast
+└── mocks/                # aulas.json, alunos.json
 ```
 
 ---
@@ -71,23 +83,31 @@ src/
 ### About
 
 A **mobile-first** teacher-portal app for the state education network (SEDUC/Sergipe), an
-academic project by **Squad 60**. The first delivered screen is **Today's Classes**: it lists
-the day's classes in time order, shows how many are already done, and gives quick access to each
-class's Attendance list and digital Journal.
+academic project by **Squad 60**. Screens delivered so far: **Today's Classes** and **Attendance list**.
 
-### Features (Today's Classes screen)
+### Screens
 
-- 📅 **Day navigation** with the day in the URL (`?data=`) — arrows, deep links and the browser *Back* button all work
-- 📊 **Day summary**: subjects, classes and a **done/total** counter
-- 🗂️ **Shift-schedule list** (with the break placed correctly)
-- 🔽 **Expandable cards** (one open at a time; the first pending class opens by default)
-- 🎨 **Squad 60 Design System** (Palette B, Poppins) with color tokens — no hex in components
-- ⏳ **Loading** (skeleton), **error** (with retry) and **empty** states
+**📅 Today's Classes** · `/professor/aulas-hoje`
+- Day navigation with the day in the URL (`?data=`) — arrows, deep links and the browser *Back*
+- Day summary (subjects, classes and a done/total counter)
+- Shift-schedule list (break in the right place) and expandable cards (one open at a time)
+
+**✅ Attendance list** · `/professor/presenca`
+- **Class roll call**: mark each student present/absent, with **read and edit modes** (and cancel)
+- **Attendance rate** per student from the rules, in three colors: normal, **warning** and **limit**
+- **Auto-generated notes** for students near or at the absence limit (derived from the data)
+- **Submit** with a "Sending…" state and success/error **toast** — markings kept on error
+- **Accessibility**: presence-column buttons with `aria-pressed` and `aria-label`
+
+Shared: **Squad 60 Design System** (Palette B, Poppins) with color tokens (no hex in components),
+and **loading** (skeleton), **error** (with retry) and **empty** states — testable via
+`?estado=carregando`, `?estado=erro` and `?estado=erro-envio`.
 
 ### Stack
 
 **React 19** · **Vite 6** · **React Router 7** · **lucide-react** (SVG icons) · CSS design
-tokens. Mocked data behind an async service (ready to swap for a real API).
+tokens · in-house toast (no external dependency). Mocked data behind an async service (ready to
+swap for a real API).
 
 ### Getting started
 
